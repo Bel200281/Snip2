@@ -1,9 +1,9 @@
-from django.http import Http404
+from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.models import Snippet
 from django.http import HttpResponseNotFound, HttpResponseServerError
+from MainApp.forms import SnippetForm
 
-  
 
 def handler404(request, exception=None):
     """Обработчик ошибки 404."""
@@ -24,8 +24,12 @@ def index_page(request):
     return render(request, 'pages/index.html', context)
 
 
-def add_snippet_page(request):
-    context = {'pagename': 'Добавление нового сниппета'}   
+def add_snippet_page(request):   
+    form = SnippetForm()
+    context = {
+        'pagename': 'Добавление нового сниппета',
+        'form': form
+         }  
     return render(request, 'pages/add_snippet.html', context)
 
 
@@ -49,5 +53,17 @@ def snippet_detail(request, snippet_id):
         'snippet': snippet 
     }
     return render(request, 'pages/snippet_detail.html', context)
+
+
+def create_snippet(request):
+    if request.method == 'POST':
+        form = SnippetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('snippets-list')
+        return render(request, 'pages/add_snippet.html', context={'form': form})
+
+    raise HttpResponseNotAllowed('You must make POST  request to add snippe.')
+    
 
 
