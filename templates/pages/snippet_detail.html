@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="mt-3 flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>{{ pagename }}</h1>
+                <hr>
+            </div>
+        </div>
+        
+        <!-- Информация о сниппете -->
+        <fieldset disabled>
+            <div class="row disabled">
+                <div class="col col-8">
+                    Название: <input type="text" value="{{ snippet.name }}" class="form-control">
+                </div>
+                <div class="col col-4">
+                    Дата создания:<input type="text" value="{{ snippet.creation_date | date:"d F Y H:i:s"}}" class="form-control">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <div class="p-2 h-100" style="border:1px solid #ced4da; border-radius:5px;">
+                        <p>
+                            {{ snippet.code }}
+                        </p>
+         
+                    </div>
+         
+                </div>
+            </div>
+         </fieldset>
+         
+         
+<hr>
+        
+        <div class="row">
+            <div class="col">
+                <dl class="row">
+                    <dt class="col-sm-3">Название:</dt>
+                    <dd class="col-sm-9">{{ snippet.name }}</dd>
+
+                    <dt class="col-sm-3">Дата создания:</dt>
+                    <dd class="col-sm-9">{{ snippet.creation_date | date:"d F Y H:i:s"}}</dd>
+                    
+                    <dt class="col-sm-3">Язык:</dt>
+                    <dd class="col-sm-9">{{ snippet.lang }}</dd>
+                    
+                    <dt class="col-sm-3">Код:</dt>
+                    <dd class="col-sm-9"><pre><code>{{ snippet.code }}</code></pre></dd>
+                </dl>
+                
+                <!-- Кнопка возврата назад -->
+                <a href="{% url 'snippets-list' %}" class="btn btn-secondary mt-3">Назад к списку</a>
+                <hr>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
