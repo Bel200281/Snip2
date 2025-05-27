@@ -70,8 +70,13 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'Snippets.wsgi.application'
 
+# Конфигурация для специальных страниц ошибок
+HANDLER404 = 'MainApp.views.handler404'
+HANDLER500 = 'MainApp.views.handler500'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
