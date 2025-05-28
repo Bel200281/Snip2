@@ -34,6 +34,19 @@ def add_snippet_page(request):
             }  
         return render(request, 'pages/add_snippet.html', context)
 
+    # Получаем данные из формы и на их основе создаем новый сниппет, сораняя его в БД
+
+    if request.method == 'POST':
+        form = SnippetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # GET / snippets list
+            return redirect('snippets-list')
+        return render(request, 'pages/add_snippet.html', context={'form': form})
+
+
+
+
 
 
 
@@ -64,10 +77,11 @@ def create_snippet(request):
         form = SnippetForm(request.POST)
         if form.is_valid():
             form.save()
+            # GET / snippets list
             return redirect('snippets-list')
         return render(request, 'pages/add_snippet.html', context={'form': form})
 
-    raise HttpResponseNotAllowed(["POST"], 'You must make POST  request to add snippe.')
+    return HttpResponseNotAllowed(["POST"], 'You must make POST  request to add snippe.')
     
 
     
