@@ -46,10 +46,6 @@ def add_snippet_page(request):
 
 
 
-
-
-
-
 def snippets_page(request):
     snippets = Snippet.objects.all()
     context = {
@@ -70,19 +66,6 @@ def snippet_detail(request, snippet_id):
         'snippet': snippet 
     }
     return render(request, 'pages/snippet_detail.html', context)
-
-
-def create_snippet(request):
-    if request.method == 'POST':
-        form = SnippetForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # GET / snippets list
-            return redirect('snippets-list')
-        return render(request, 'pages/add_snippet.html', context={'form': form})
-
-    return HttpResponseNotAllowed(["POST"], 'You must make POST  request to add snippe.')
-    
 
     
    
