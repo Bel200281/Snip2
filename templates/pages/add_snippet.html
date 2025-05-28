@@ -14,10 +14,15 @@
             <div class="col">
                 <form action="" method="post">
                     {% csrf_token %}
-                    <table>
-                        {{ form }}
-                    </table>     
-                    <input type='submit' value='Создать'></input>
+                        {{ form.as_p }} 
+                        
+                    <div class="form-grop-row">
+                       <div class="col-6">
+                          <input type='submit' class='btn btn-primary btn-block' value='Создать сниппет'></input>
+                       </div>
+                    </div>
+            
+                    
                 </form>
             <hr>
                <!-- Кнопка возврата назад -->
