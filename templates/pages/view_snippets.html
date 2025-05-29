@@ -39,7 +39,10 @@
                         <td>{{ snippet.lang }}</td>
                         <td>{{ snippet.creation_date | date:"d F Y H:i:s"}}</td>
                         <td> <!-- Колонка с кнопками -->
-                            <a href="{% url 'snippet-edit' snippet.id %}" class="btn btn-warning btn-sm">Редактировать</a>
+                            <a href="{% url 'snippet-edit' snippet.id %}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            
                             <a href="{% url 'snippet-delete' snippet.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить этот сниппет?');">Удалить</a>
                         </td>
                     </tr>

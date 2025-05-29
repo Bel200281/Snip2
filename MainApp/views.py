@@ -86,7 +86,6 @@ def snippet_edit(request, snippet_id):
     return render(request, 'pages/edit_snippet.html', context)
 
 
-
 def snippet_delete(request, snippet_id):
     snippet = get_object_or_404(Snippet, pk=snippet_id)
     snippet.delete()
