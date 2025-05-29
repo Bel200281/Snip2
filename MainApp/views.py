@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.models import Snippet
 from django.http import HttpResponseNotFound, HttpResponseServerError
 from MainApp.forms import SnippetForm
+from django.contrib import auth
+
 
 
 def handler404(request, exception=None):
@@ -92,3 +94,23 @@ def snippet_delete(request, snippet_id):
     return redirect('snippets-list')
 
    
+def login(request):
+   if request.method == 'POST':
+       username = request.POST.get("username")
+       password = request.POST.get("password")
+       # print("username =", username)
+       # print("password =", password)
+       user = auth.authenticate(request, username=username, password=password)
+       if user is not None:
+           auth.login(request, user)
+       else:
+           # Return error message
+           pass
+   return redirect('home')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('home')
+
+
