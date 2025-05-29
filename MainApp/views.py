@@ -55,17 +55,41 @@ def snippets_page(request):
     return render(request, 'pages/view_snippets.html', context)
 
 
-def snippet_detail(request, snippet_id):
+def snippet_detail(request, snippet_id: int):
+    context = {'pagename': 'Просмотр Сниппета'}
     try:
         snippet = Snippet.objects.get(pk=snippet_id)
     except Snippet.DoesNotExist:
-          return render(request, 'pages/error.html', {'message': 'Запрашиваемый сниппет не найден.'}, status=404)
-         
-    context = {
-        'pagename': 'Просмотр сниппета',
-        'snippet': snippet 
-    }
+          return render(request, 'pages/error.html', context | {"error": f'Snippet with id={snippet_id} not found.'}, status=404)
+    else:  
+          context['snippet'] = snippet
+          context['type'] = 'edit'
+        
     return render(request, 'pages/snippet_detail.html', context)
 
-    
+
+def snippet_edit(request, snippet_id):
+    snippet = get_object_or_404(Snippet, pk=snippet_id)
+
+    if request.method == 'POST':
+        form = SnippetForm(request.POST, instance=snippet)
+        if form.is_valid():
+            form.save()
+            return redirect('snippets-list')
+    else:
+        form = SnippetForm(instance=snippet)
+
+    context = {
+        'pagename': 'Редактирование сниппета',
+        'form': form
+    }
+    return render(request, 'pages/edit_snippet.html', context)
+
+
+
+def snippet_delete(request, snippet_id):
+    snippet = get_object_or_404(Snippet, pk=snippet_id)
+    snippet.delete()
+    return redirect('snippets-list')
+
    
